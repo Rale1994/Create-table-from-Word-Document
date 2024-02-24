@@ -1,19 +1,14 @@
-from ctypes.wintypes import RGB
-
 from docx.oxml import OxmlElement
-from docx.shared import Pt, RGBColor
-from docx import Document
-from docx.shared import RGBColor
+from docx.shared import Pt
 from docx.oxml.ns import qn
 
 
 def oboji_tekst_celija_tabele(table):
     for row in table.rows:
         for cell in row.cells:
-            if cell.text:  # Provera da li ćelija ima sadržaj
-                # Kreiranje elementa za shading
+            if cell.text:
                 shd = OxmlElement("w:shd")
-                shd.set(qn("w:fill"), "FFFF00")  # Postavljanje žute boje pozadine
+                shd.set(qn("w:fill"), "FFFF00")
                 cell._element.get_or_add_tcPr().append(shd)
 
 
@@ -49,8 +44,6 @@ def set_table_color(table):
         for i, cell in enumerate(row.cells):
             if cell.text:
                 columns_to_color.add(i)
-
-    # Obojivanje identificiranih kolona
     for i in columns_to_color:
         for row in table.rows:
-            set_cell_shading(row.cells[i], "FFFF00")  # Žuta boja
+            set_cell_shading(row.cells[i], "FFFF00")
